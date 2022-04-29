@@ -1,0 +1,10 @@
+{
+    "nuxt.isNuxtApp": false,
+    "vscode-run-rspec-file.custom-command": "docker exec -it cosmos-${PWD##*/} rspec --format documentation",
+    "rubyTestExplorer.rspecCommand": "docker exec -it cosmos-${PWD##*/} rspec --format documentation",
+    "rubyTestExplorer.minitestCommand": "docker exec -it cosmos-${PWD##*/} rspec",
+    "rubyTestExplorer.minitestDirectory": "./spec/",
+    "rubyTestExplorer.testFramework": "rspec",
+    "rubyTestExplorer.logpanel": true,
+    "rubyTestExplorer.debugCommand": "docker exec -it cosmos-${PWD##*/} rspec",
+}

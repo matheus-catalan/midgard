@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  adapter: postgresql
+  schema_search_path: public
+  host: "<%= ENV['local_database_host'] %>"
+  port: "<%= ENV['local_database_port'] %>"
+  database: "<%= ENV['local_database_name'] %>"
+  username: "<%= ENV['local_database_user'] %>"
+  password: "<%= ENV['local_database_pass'] %>"
+
+test:
+  adapter: postgresql
+  schema_search_path: public
+  host: "<%= ENV['test_database_host'] %>"
+  port: "<%= ENV['test_database_port'] %>"
+  database: "<%= ENV['test_database_name'] %>"
+  username: "<%= ENV['test_database_user'] %>"
+  password: "<%= ENV['test_database_pass'] %>"
