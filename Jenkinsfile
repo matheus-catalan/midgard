@@ -5,7 +5,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 script {
-                    dockerapp = docker.build('matheus-catalan/comsmos-midgard', '.')
+                    dockerapp = docker.build('matheuscatalan123/comsmos-midgard', '.')
                 }
             }
         }
