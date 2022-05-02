@@ -2,9 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage ('Inicial') {
+        stage ('Build Image') {
             steps {
-                echo 'Hello World'
+                script {
+                    dockerapp = docker.build('matheus-catalan/comsmos-midgard', '.')
+                }
             }
         }
     }
