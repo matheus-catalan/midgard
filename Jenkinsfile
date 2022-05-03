@@ -24,7 +24,7 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
-                    dockerapp.inside("-p 8181:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
+                    dockerapp.inside("-p 8181:8080 --network=cosmos_network -v /var/lib/jenkins/jobs/cosmos-midgard/workspace:/usr/src/app -w /usr/src/app --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
                         sh 'ls -l ../'
                         sh 'bundle'
                     }
