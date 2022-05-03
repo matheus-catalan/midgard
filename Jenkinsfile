@@ -13,9 +13,8 @@ pipeline {
         stage ('Run Test') {
             steps {
                 script {
+                    sh 'docker network rm cosmos_midgard && docker network create cosmos_midgard'
                     sh "docker-compose -f .docker/docker-compose.test.yml up --build -d"
-                    // docker.image('postgres:13').inside("-p 5432:5432 --network=cosmos-midgard-network --name comsmos-midgard-test --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { 
-                    sh "docker network ls"
                     dockerapp.inside("-p 8080:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { 
                         stage 'Install Gems'
                         sh 'bundle install'
