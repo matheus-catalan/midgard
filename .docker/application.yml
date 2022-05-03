@@ -11,7 +11,6 @@ test_database_user: "test"
 test_database_pass: "test"
 
 LOG_LEVEL: "debug"
-SECRET_KEY_BASE: "aSecureTokenWouldNormallyGoHere"
 
 REDIS_URL: "redis://:root123@redis:6379"
 REDIS_CACHE_PATH: "0/cache"

@@ -1,0 +1,21 @@
+version: "3"
+services:
+  cosmos-db-midgard-test:
+    image: "postgres:13"
+    container_name: "cosmos-db-midgard-test"
+    restart: always
+    tty: true
+    environment:
+        POSTGRES_DB: test
+        POSTGRES_USER: test
+        POSTGRES_PASSWORD: test
+    ports:
+        - 5432:5432
+    command: -p 5432
+    networks:
+        - cosmos_network
+
+networks:
+  cosmos_network:
+    name: cosmos_network
+    driver: bridge

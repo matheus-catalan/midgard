@@ -12,9 +12,6 @@
 /db/*.sqlite3-journal
 /db/*.sqlite3-*
 
-# Ignore .docker file
-.docker
-
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
