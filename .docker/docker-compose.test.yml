@@ -18,9 +18,7 @@ services:
   cosmos-midgard:
     image: matheuscatalan123/cosmos-midgard:latest
     container_name: "cosmos-midgard"
-    entrypoint: "dockerize -template .docker/application.yml:config/application.yml  
-                          ./.docker/docker-entrypoint.sh"
-    restart: on-failure
+    entrypoint: "dockerize ./.docker/docker-entrypoint.sh"
     volumes:
       - ./services/midgard:/usr/src/app
     ports:
