@@ -13,7 +13,7 @@ pipeline {
         stage ('Run Test') {
             steps {
                 script {
-                    docker.image('postgres').withRun("-p 5432:5432 --network=cosmos-midgard --name comsmos-midgard-test--rm-e POSTGRES_DB=test-e POSTGRES_USER=test-e POSTGRES_PASSWORD=test-d postgres:13") { " container ->
+                    docker.image('postgres:13').withRun("-p 5432:5432 --network=cosmos-midgard --name comsmos-midgard-test--rm-e POSTGRES_DB=test-e POSTGRES_USER=test-e POSTGRES_PASSWORD=test -d") { container ->
                         echo 'Running tests'
                     }
 
