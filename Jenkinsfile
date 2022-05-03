@@ -5,18 +5,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 script {
-                    dockerapp = docker.build("matheuscatalan123/cosmos-midgard:${env.BUILD_ID}", ". --build-arg  USER_ID=501 --build-arg GROUP_ID=501")
-                }
-            }
-        }
-
-         stage ('Push Image') {
-            steps {
-                script {
-                    docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
-                        dockerapp.push('latest')
-                        dockerapp.push("${env.BUILD_ID}")
-                    }
+                    dockerapp = docker.build("matheuscatalan123/cosmos-midgard:${env.BUILD_ID}", ". --build-arg  USER_ID=${UID:-501} --build-arg GROUP_ID=${UID:-20}")
                 }
             }
         }
@@ -36,7 +25,6 @@ pipeline {
             steps {
                 script {
                     dockerapp.inside("-p 8181:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { 
-                        sh 'ls -la'
                         sh 'bundle install'
                         sh 'bundle exec rake db:create db:migrate'
                         sh 'bundle exec rails rspec'
@@ -45,6 +33,15 @@ pipeline {
             }
         }
 
-       
+        // stage ('Push Image') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
+        //                 dockerapp.push('latest')
+        //                 dockerapp.push("${env.BUILD_ID}")
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
