@@ -13,7 +13,8 @@ pipeline {
         stage ('Run Test') {
             steps {
                 script {
-                    sh "if [[ '$(docker network ls | grep cosmo_network)' == "" ]] ; then docker network create cosmo_network fi"
+                    sh "if [[ '$(docker network ls | grep cosmo_network)' == '' ]] ; then docker network create cosmo_network fi"
+
                     sh "docker-compose -f .docker/docker-compose.test.yml up --build -d"
                     dockerapp.inside("-p 8080:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { 
                         stage 'Install Gems'
