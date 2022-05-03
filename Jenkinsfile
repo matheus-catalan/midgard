@@ -17,7 +17,7 @@ pipeline {
                     sh "docker network ls"
 
                     sh "docker-compose -f .docker/docker-compose.test.yml up --build -d"
-                    dockerapp.inside("-p 8080:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { 
+                    dockerapp.run("-p 8181:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test", "rails spec") { 
                         stage 'Install Gems'
                         sh 'bundle install'
                     }
