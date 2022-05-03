@@ -18,7 +18,7 @@ services:
   cosmos-midgard:
     image: matheuscatalan123/cosmos-midgard:latest
     container_name: "cosmos-midgard"
-    entrypoint: "dockerize ./.docker/docker-entrypoint.sh"
+    entrypoint: "./.docker/docker-entrypoint.sh"
     volumes:
       - ./services/midgard:/usr/src/app
     ports:
