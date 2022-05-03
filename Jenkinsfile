@@ -23,7 +23,7 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
-                    dockerapp.inside("-p 8181:8080 --user='${id -u}' --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
+                    dockerapp.inside("-p 8181:8080 --user='501' --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
                         sh 'echo ${id -u -n}'
                         sh 'echo ${id -u}'
                         sh 'usermod -aG root ${id -u -n}'
