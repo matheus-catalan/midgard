@@ -17,7 +17,7 @@ pipeline {
                         .image('postgres:13')
                         .run(
                             "-p 5432:5432", 
-                            "--network=cosmos-midgard"
+                            "--network=cosmos-midgard",
                             "--name", "comsmos-midgard-test", 
                             "--rm", 
                             "-e", "POSTGRES_DB=teste",
