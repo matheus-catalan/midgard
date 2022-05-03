@@ -14,18 +14,13 @@ pipeline {
             steps {
                 script {
                     sh 'docker network create cosmos-midgard-network'
-                    docker.image('postgres:13').inside(" \
-                        --rm \
-                        -p 5432:5432 \
-                        --network=cosmos-midgard-network \
-                        --name comsmos-midgard-test \
-                        -e POSTGRES_DB=test \
-                        -e POSTGRES_USER=test \ 
-                        -e POSTGRES_PASSWORD=test
-                    ") { container ->
-                        dockerapp.run()
+                    docker.image('postgres:13').inside("-p 5432:5432 --network=cosmos-midgard-network --name comsmos-midgard-test --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { container ->
+                        dockerapp.inside("-p 8080:8080 --network=cosmos-midgard-network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { container ->
+                            stage 'Install Gems'
+                            sh 'bundle install'
+                        }
                     }
-
+                    sh 'docker ps'
 
                     // $ docker run --restart=always -d --name elasticsearch -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" docker.elastic.co/elasticsearch/elasticsearch:5.5.2
                 }
