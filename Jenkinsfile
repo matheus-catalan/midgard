@@ -5,7 +5,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 script {
-                    dockerapp = docker.build("matheuscatalan123/cosmos-midgard:${env.BUILD_ID}", ".")
+                    dockerapp = docker.build("matheuscatalan123/cosmos-midgard:${env.BUILD_ID}", ". --build-arg  USER_ID=501 --build-arg GROUP_ID=501")
                 }
             }
         }
