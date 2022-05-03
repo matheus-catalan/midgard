@@ -1,0 +1,35 @@
+version: "3"
+services:
+  cosmos-midgard:
+    image: "matheuscatalan123/cosmos-midgard"
+    container_name: "cosmos-midgard"
+    entrypoint: "dockerize -template .docker/application.yml:config/application.yml  
+                          -wait tcp://cosmos-db-midgard:5432 -timeout 100s
+                          ./.docker/docker-entrypoint.sh"
+    restart: on-failure
+    volumes:
+      - ./services/midgard:/usr/src/app
+    ports:
+      - "8080:8080"
+    networks:
+      - cosmos_network
+
+    cosmos-db-midgard-test:
+        image: "postgres:13"
+        container_name: "cosmos-db-midgard-test"
+        restart: always
+        tty: true
+        environment:
+            POSTGRES_DB: test
+            POSTGRES_USER: test
+            POSTGRES_PASSWORD: test
+        ports:
+            - 5433:5432
+        command: -p 5433
+        networks:
+            - cosmos_network
+
+networks:
+  cosmos_network:
+    name: cosmos_network
+    driver: bridge
