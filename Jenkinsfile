@@ -5,7 +5,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 script {
-                    dockerapp = docker.build("matheuscatalan123/comsmos-midgard:${env.BUILD_ID}", ".")
+                    dockerapp = docker.build("matheuscatalan123/cosmos-midgard:${env.BUILD_ID}", ".")
                 }
             }
         }
@@ -15,10 +15,11 @@ pipeline {
                 script {
                     sh "docker-compose -f .docker/docker-compose.test.yml up --build -d"
                     // docker.image('postgres:13').inside("-p 5432:5432 --network=cosmos-midgard-network --name comsmos-midgard-test --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { 
-                        dockerapp.inside("-p 8080:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { 
-                            stage 'Install Gems'
-                            sh 'bundle install'
-                        }
+                    sh "docker network ls"
+                    dockerapp.inside("-p 8080:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { 
+                        stage 'Install Gems'
+                        sh 'bundle install'
+                    }
                     // }
                     sh 'docker ps'
 
