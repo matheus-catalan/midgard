@@ -23,11 +23,8 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
-                    dockerapp.inside("-p 8181:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
-                        sh 'whoami'
-                        sh 'usermod -aG root ${whoami}'
-                        // sh 'ls -la /usr/local/bundle/'
-                        sh 'bundle'
+                    dockerapp.inside("-p 8181:8080 --network=cosmos_network --name cosmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
+                        sh 'bundle install'
                     }
                 }
             }
