@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     dockerapp.inside("-p 8181:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
-                        sh "echo $USER"
+                        sh 'pwd'
                         sh 'bundle'
                     }
                 }
