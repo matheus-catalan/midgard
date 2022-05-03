@@ -16,7 +16,7 @@ COPY Gemfile.lock Gemfile.lock
 RUN bundle install --jobs 20 --retry 5
 
 COPY . .
-COPY ./docker/application.yml config/application.yml  
+COPY ./.docker/application.yml config/application.yml  
 
 
 EXPOSE 8080
