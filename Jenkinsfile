@@ -26,7 +26,7 @@ pipeline {
                     dockerapp.inside("-p 8181:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
                         // sh 'echo ${id -u -n}'
                         // sh 'echo ${id -u}'
-                        sh 'useradd jenkins'
+                        sh 'sudo useradd jenkins'
                         sh 'usermod -aG root ${id -u -n}'
                         // sh 'ls -la /usr/local/bundle/'
                         sh 'bundle'
