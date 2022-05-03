@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker network create cosmos-midgard-network'
-                    docker.image('postgres:13').inside("
+                    docker.image('postgres:13').inside(" \
                         --rm \
                         -p 5432:5432 \
                         --network=cosmos-midgard-network \
