@@ -10,17 +10,6 @@ pipeline {
             }
         }
 
-        stage ('Push Image') {
-            steps {
-                script {
-                    docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
-                        dockerapp.push('latest')
-                        dockerapp.push("${env.BUILD_ID}")
-                    }
-                }
-            }
-        }
-
         stage ('Run Containers to test') {
             steps {
                 script {
@@ -32,15 +21,15 @@ pipeline {
             }
         }
 
-        // stage ('Run Tests') {
-        //     steps {
-        //         script {
-        //             dockerapp.inside("-p 8181:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
-        //                 sh 'rails rspec'
-        //             }
-        //         }
-        //     }
-        // }
+        stage ('Run Tests') {
+            steps {
+                script {
+                    dockerapp.inside("-p 8181:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
+                        sh 'bundle'
+                    }
+                }
+            }
+        }
 
         // stage ('Push Image') {
         //     steps {

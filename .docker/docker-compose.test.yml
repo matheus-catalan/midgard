@@ -15,17 +15,6 @@ services:
     networks:
         - cosmos_network
 
-  cosmos-midgard:
-    image: matheuscatalan123/cosmos-midgard:latest
-    container_name: "cosmos-midgard"
-    # entrypoint: "./.docker/docker-entrypoint.sh"
-    volumes:
-      - ./services/midgard:/usr/src/app
-    ports:
-      - "8181:8080"
-    networks:
-      - cosmos_network
-
 networks:
   cosmos_network:
     driver: bridge
