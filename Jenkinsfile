@@ -13,7 +13,7 @@ pipeline {
         stage ('Run Test') {
             steps {
                 script {
-                    sh 'docker network inspect test'
+                    sh 'docker network create cosmos-midgard-network'
                     docker.image('postgres:13').inside("-p 5432:5432 --network=cosmos-midgard-network --name comsmos-midgard-test --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { container ->
                         echo 'Running tests'
                     }
