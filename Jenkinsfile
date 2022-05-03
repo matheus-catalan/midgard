@@ -14,6 +14,7 @@ pipeline {
             steps {
                 script {
                     sh "docker network ls|grep cosmos_network > /dev/null || docker network create cosmos_network"
+                    sh "docker network ls"
 
                     sh "docker-compose -f .docker/docker-compose.test.yml up --build -d"
                     dockerapp.inside("-p 8080:8080 --network=cosmos_network --name comsmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") { 
