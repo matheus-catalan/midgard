@@ -17,5 +17,4 @@ services:
 
 networks:
   cosmos_network:
-    name: cosmos_network
     driver: bridge
