@@ -28,6 +28,14 @@ pipeline {
             }
         }
 
+        stage ('Cleanup Containers') {
+            steps {
+                script {
+                    sh "docker rm -f db-test"
+                }
+            }
+        }
+
         // stage ('Push Image') {
         //     steps {
         //         script {
