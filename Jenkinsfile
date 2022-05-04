@@ -29,13 +29,13 @@ pipeline {
             }
         }
 
-        stage ('Cleanup Containers') {
-            steps {
-                script {
-                    // sh "docker rm -f $(docker ps -a -q)"
-                }
-            }
-        }
+        // stage ('Cleanup Containers') {
+        //     steps {
+        //         script {
+        //             // sh "docker rm -f $(docker ps -a -q)"
+        //         }
+        //     }
+        // }
 
         // stage ('Push Image') {
         //     steps {
