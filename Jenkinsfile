@@ -31,7 +31,7 @@ pipeline {
         stage ('Cleanup Containers') {
             steps {
                 script {
-                    sh "docker rm -f db-test"
+                    sh "docker rm -f db-test cosmos-midgard"
                 }
             }
         }
