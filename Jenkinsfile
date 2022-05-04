@@ -23,7 +23,7 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
-                    dockerapp.run("--network=cosmos_network --name cosmos-midgard -p 8080:8080", "rspec")
+                    dockerapp.run("--network=cosmos_network --name cosmos-midgard", "rspec")
                 }
             }
         }
