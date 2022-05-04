@@ -14,7 +14,8 @@ pipeline {
             steps {
                 script {
                     sh "docker network ls|grep cosmos_network > /dev/null || docker network create cosmos_network"
-                    sh "docker-compose -f .docker/docker-compose.test.yml up --build -d"
+                    docker.image('postgres:13').run('--network=cosmos_network -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test -p 5432:5432 -d', '-p 5432')
+                    // sh "docker-compose -f .docker/docker-compose.test.yml up --build -d"
                     // $ docker run --restart=always -d --name elasticsearch -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" docker.elastic.co/elasticsearch/elasticsearch:5.5.2
                 }
             }
@@ -23,7 +24,7 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
-                    dockerapp.inside("-p 8181:8080 --network=cosmos_network --name cosmos-midgard --rm -e POSTGRES_DB=test -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test") {
+                    dockerapp.run("--network=cosmos_network --name cosmos-midgard") {
                         sh 'bundle install'
                     }
                 }
