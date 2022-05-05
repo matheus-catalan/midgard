@@ -20,13 +20,23 @@ pipeline {
         stage ('Preparing workspace to run the tests') {
             steps {
                 script {
-                    sh "echo '==> Clear workspace to test'"
+                    
                     sh "echo '==> Create network $NAME_NETWORK to test'"
                     sh "docker network ls|grep $NAME_NETWORK > /dev/null || docker network create $NAME_NETWORK"
+                    
                     sh "echo '==> Remove old containers'"
                     sh "docker rm -f $NAME_CONTAINER_DB_TEST $NAME_CONTAINER_SERVICE_TEST > /dev/null"
+
                     sh "echo '==> Create databases $NAME_CONTAINER_DB_TEST to test'"
-                    docker.image('postgres:13').run("-it --rm --name $NAME_CONTAINER_DB_TEST --network=$NAME_NETWORK -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -p 5433:5432 -d", '-p 5433')
+                    docker.image('postgres:13').run(
+                        "-it --rm --name $NAME_CONTAINER_DB_TEST" + 
+                        "--network=$NAME_NETWORK" + 
+                        "-e POSTGRES_DB=$POSTGRES_DB" + 
+                        "-e POSTGRES_USER=$POSTGRES_USER" + 
+                        "-e POSTGRES_PASSWORD=$POSTGRES_PASSWORD"+ 
+                        "-p 5433:5432 -d", 
+                        '-p 5433'
+                    )
                     // $ docker run --restart=always -d --name elasticsearch -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" docker.elastic.co/elasticsearch/elasticsearch:5.5.2
                 }
             }
@@ -59,4 +69,25 @@ pipeline {
         //     }
         // }
     }
+}
+
+def databaseHealthy(){
+  sh (
+    script: "docker inspect --format '{{.State.Health.Status}}' $NAME_CONTAINER_DB_TEST",
+    returnStdout: true
+  ).trim().equals('healthy')
+}
+
+def databaseRunning(){
+  sh (
+    script: "docker inspect --format='{{.State.Running}}' $NAME_CONTAINER_DB_TEST",
+    returnStdout: true
+  ).trim().equals('true')
+}
+
+def databaseExists(){
+  sh (
+    script: "docker inspect $NAME_CONTAINER_DB_TEST -f {}",
+    returnStatus: true
+  ) == 0
 }
