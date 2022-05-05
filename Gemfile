@@ -46,11 +46,12 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 4.0'
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
   gem 'rswag-specs'
+  gem 'rspec_junit_formatter'
+  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :development do
   gem 'listen', '~> 3.3'
-  gem 'rspec-rails', '~> 5.0.0'
 
   gem 'rubocop'
   gem 'rubocop-rails', require: false
