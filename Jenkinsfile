@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         NAME_CONTAINER_SERVICE_TEST = "midgard"
-        NAME_CONTAINER_DB_TEST = "db"
         NAME_NETWORK = "cosmo_network"
+        NAME_CONTAINER_DB_TEST = "db"
         POSTGRES_DB = "test"
         POSTGRES_USER = "test"
         POSTGRES_PASSWORD = "test"
@@ -20,11 +20,12 @@ pipeline {
         stage ('Preparing workspace to run the tests') {
             steps {
                 script {
-                    sh "echo '\033[0;34m==> Clear workspace cosmos'"
-                    sh  "echo '\033[0;32m==> Workspace successfully cleaned'"
-                    sh ''
+                    sh "echo '==> Clear workspace to test'"
+                    sh "echo '==> Create network $NAME_NETWORK to test'"
                     sh "docker network ls|grep $NAME_NETWORK > /dev/null || docker network create $NAME_NETWORK"
+                    sh "echo '==> Remove old containers'"
                     sh "docker rm -f $NAME_CONTAINER_DB_TEST $NAME_CONTAINER_SERVICE_TEST > /dev/null"
+                    sh "echo '==> Create databases $NAME_CONTAINER_DB_TEST to test'"
                     docker.image('postgres:13').run("-it --rm --name $NAME_CONTAINER_DB_TEST --network=$NAME_NETWORK -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -p 5433:5432 -d", '-p 5433')
                     // $ docker run --restart=always -d --name elasticsearch -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" docker.elastic.co/elasticsearch/elasticsearch:5.5.2
                 }
