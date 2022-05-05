@@ -4,7 +4,7 @@ local_database_name: "development"
 local_database_user: "db"
 local_database_pass: "db"
  
-test_database_host: "db-test"
+test_database_host: "db"
 test_database_port: "5433"
 test_database_name: "test"
 test_database_user: "test"
