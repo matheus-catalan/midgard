@@ -63,6 +63,8 @@ end
 
 group :test do
   gem 'database_cleaner-active_record'
+  gem 'database_cleaner'
+   gem 'mocha'
   gem 'rubocop-rspec'
   gem 'simplecov', '~> 0.16.0'
 end
