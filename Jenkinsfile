@@ -45,7 +45,7 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
-                    dockerapp.inside("--network=cosmos_network --name $NAME_CONTAINER_SERVICE_TEST") {
+                    dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST") {
                         sh 'rake db:setup'
                         sh 'rake db:migrate'
                         sh 'rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
@@ -54,8 +54,9 @@ pipeline {
             }
 
             post {
-            always {
-                junit 'tmp/rspec.xml'
+                always {
+                    junit 'tmp/rspec.xml'
+                }
             }
         }
 
