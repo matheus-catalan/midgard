@@ -46,8 +46,8 @@ pipeline {
             steps {
                 script {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST") {
-                        sh 'rails db:setup'
-                        sh 'rails db:migrate'
+                        // sh 'rails db:setup'
+                        // sh 'rails db:migrate'
                         sh 'rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
                     }
                 }
