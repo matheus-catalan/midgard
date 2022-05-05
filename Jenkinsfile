@@ -29,11 +29,11 @@ pipeline {
 
                     sh "echo '==> Create databases $NAME_CONTAINER_DB_TEST to test'"
                     docker.image('postgres:13').run(
-                        "-it --rm --name $NAME_CONTAINER_DB_TEST" + 
-                        "--network=$NAME_NETWORK" + 
-                        "-e POSTGRES_DB=$POSTGRES_DB" + 
-                        "-e POSTGRES_USER=$POSTGRES_USER" + 
-                        "-e POSTGRES_PASSWORD=$POSTGRES_PASSWORD"+ 
+                        "-it --rm --name $NAME_CONTAINER_DB_TEST " + 
+                        "--network=$NAME_NETWORK " + 
+                        "-e POSTGRES_DB=$POSTGRES_DB " + 
+                        "-e POSTGRES_USER=$POSTGRES_USER " + 
+                        "-e POSTGRES_PASSWORD=$POSTGRES_PASSWORD "+ 
                         "-p 5433:5432 -d", 
                         '-p 5433'
                     )
