@@ -46,8 +46,10 @@ pipeline {
             steps {
                 script {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 ") {
-                        sh 'rails routes'
-                        // sh 'rspec spec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
+                        sh 'rake db:setup'
+                        sh 'rake db:migrate'
+                        // sh 'rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
+                        sh 'rspec --format progress'
                     }
                 }
             }
