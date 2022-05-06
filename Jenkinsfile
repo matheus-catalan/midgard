@@ -12,7 +12,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 script {
-                    slackSend "Build Started - ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+                    slackSend "Build Started"
                     // slackSend(channel: "deploy", message: "Here is the primary message")
                     dockerapp = docker.build("matheuscatalan123/cosmos-midgard:base", ".")
                 }
