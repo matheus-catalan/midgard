@@ -8,10 +8,10 @@ pipeline {
         POSTGRES_USER = "test"
         POSTGRES_PASSWORD = "test"
     }
-    slackSend (color: "#FFFF00", message: "Deploy is starting")
     stages {
         stage ('Build Image') {
             steps {
+                slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
                 script {
                     dockerapp = docker.build("matheuscatalan123/cosmos-midgard:base", ".")
                 }
