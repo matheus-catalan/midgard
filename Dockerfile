@@ -26,11 +26,8 @@ FROM ruby:2.7.2-alpine
 
 RUN apk update && \
     apk upgrade && \
-    apk add ruby-dev build-base && \
-    default-jdk \
-    postgresql-client \
-    git && \
-    rm -rf /var/cache/apk/* 
+    apk add ruby-dev build-base mariadb-dev git && \
+    rm -rf /var/cache/apk/*
 
 WORKDIR /usr/src/app
 
