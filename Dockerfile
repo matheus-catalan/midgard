@@ -21,7 +21,7 @@
 
 # CMD ["rails", "server", "-p", "8080", "-b", "0.0.0.0"]
 
-FROM ruby:2.4.1-alpine
+FROM ruby:2.7.2-alpine
 
 
 RUN apk update && \
