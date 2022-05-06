@@ -85,10 +85,10 @@ pipeline {
     }
     post {
         success {
-            def slackResponse = slackSend(channel: slackResponse.threadId, color: "good", message: "[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build deployed successfully - ${env.BUILD_NUMBER}>")
+            def slackResponse1 = slackSend(channel: slackResponse.threadId, color: "good", message: "[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build deployed successfully - ${env.BUILD_NUMBER}>")
         }
         failure {
-            def slackResponse = slackSend(channel: slackResponse.threadId, color: "danger", failOnError:true, message:"[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build failed  - ${env.BUILD_NUMBER} >")
+            def slackResponse2 = slackSend(channel: slackResponse.threadId, color: "danger", failOnError:true, message:"[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build failed  - ${env.BUILD_NUMBER} >")
         }
     }
 }
