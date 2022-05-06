@@ -48,6 +48,7 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   gem 'rspec-rails', '~> 5.0.0'
   gem 'rswag-specs'
+  gem 'activesupport', '~> 6.1.5'
 end
 
 group :development do
