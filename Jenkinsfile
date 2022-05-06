@@ -12,7 +12,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 script {
-                    slackSend(color: "good", message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+                    slackSend(color: "good", message: "<${env.BUILD_URL}|Build Started - ${env.BUILD_NUMBER}>")
                     dockerapp = docker.build("matheuscatalan123/cosmos-midgard:base", ".")
                 }
             }
@@ -85,10 +85,10 @@ pipeline {
     }
     post {
         success {
-            slackSend(color: "good", message: "Build deployed successfully - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(color: "good", message: "<${env.BUILD_URL}|Build deployed successfully - ${env.BUILD_NUMBER}>")
         }
         failure {
-            slackSend(color: "#f70505", failOnError:true, message:"Build failed  - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(color: "#f70505", failOnError:true, message:"<${env.BUILD_URL}|Build failed  - ${env.BUILD_NUMBER} >")
         }
     }
 }
