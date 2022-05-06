@@ -49,7 +49,7 @@ pipeline {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
                         sh 'bundle install'
                         // sh 'rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
-                        sh 'rspec --format progress'
+                        sh 'rails rspec --format progress'
                     }
                 }
             }
