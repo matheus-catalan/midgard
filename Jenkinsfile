@@ -11,9 +11,9 @@ pipeline {
     stages {
         stage ('Build Image') {
             steps {
-                // slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
                 script {
-                    slackSend(channel: "deploy", message: "Here is the primary message")
+                    slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+                    // slackSend(channel: "deploy", message: "Here is the primary message")
                     dockerapp = docker.build("matheuscatalan123/cosmos-midgard:base", ".")
                 }
             }
