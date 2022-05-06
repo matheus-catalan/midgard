@@ -47,7 +47,7 @@ pipeline {
                 script {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 ") {
                         sh 'ls -l'
-                        sh 'rm -f /usr/local/bundle/cache/bundler/git/faker-9fbfdc74b06b6ae28040c03e3de8c9c3b48df274'
+                        sh 'rm -r /usr/local/bundle/cache/bundler/git/faker-9fbfdc74b06b6ae28040c03e3de8c9c3b48df274'
                         sh 'bundle install'
                         // sh 'rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
                         sh 'RAILS_ENV=test rspec --format progress'
