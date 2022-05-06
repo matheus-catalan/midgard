@@ -49,7 +49,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0.0'
   gem 'rswag-specs'
   gem 'activesupport', '~> 6.1.5'
-  gem 'diff-lcs', '~>1.5.0'
+  gem 'diff-lcs', '~>1.4.4'
 end
 
 group :development do
