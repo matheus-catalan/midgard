@@ -85,6 +85,8 @@ pipeline {
     }
     post {
         success {
+            sh '${slackResponse.threadId}'
+            sh '${slackResponse}' 
             def slackResponse1 = slackSend(channel: slackResponse.threadId, color: "good", message: "[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build deployed successfully - ${env.BUILD_NUMBER}>")
         }
         failure {
