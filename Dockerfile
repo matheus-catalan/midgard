@@ -33,7 +33,7 @@ WORKDIR /usr/src/app
 
 COPY Gemfile Gemfile
 
-RUN bundle install
+RUN bundle install --jobs 20 --retry 5
 
 COPY . .
 
