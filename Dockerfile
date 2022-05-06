@@ -32,8 +32,7 @@ RUN apk update && \
     openjdk11 \
     git \
     postgresql-client \
-    postgresql-dev \
-    libpq && \
+    postgresql-dev && \
     rm -rf /var/cache/apk/*
 
 WORKDIR /usr/src/app
