@@ -88,7 +88,7 @@ pipeline {
             slackSend(color: "good", message: "[String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] <${env.BUILD_URL}|Build deployed successfully - ${env.BUILD_NUMBER}>")
         }
         failure {
-            slackSend(color: "#f70505", failOnError:true, message:"[String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] <${env.BUILD_URL}|Build failed  - ${env.BUILD_NUMBER} >")
+            slackSend(color: "#f70505", failOnError:true, message:"[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] <${env.BUILD_URL}|Build failed  - ${env.BUILD_NUMBER} >")
         }
     }
 }
