@@ -49,9 +49,9 @@ pipeline {
                         sh 'ls -l'
                         sh 'echo ------------'
                         sh 'ls -l ../'
-                        sh 'rails db:setup'
+                        sh 'RAILS_ENV=test rails db:setup'
                         // sh 'rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
-                        sh 'rspec --format progress'
+                        sh 'RAILS_ENV=test rspec --format progress'
                     }
                 }
             }
