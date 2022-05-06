@@ -29,7 +29,7 @@ RUN apk update && \
     apk add ruby-dev build-base && \
     default-jdk \
     postgresql-client \
-    git \
+    git && \
     rm -rf /var/cache/apk/* 
 
 WORKDIR /usr/src/app
