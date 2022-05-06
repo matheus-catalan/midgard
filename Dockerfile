@@ -26,13 +26,18 @@ FROM ruby:2.4.1-alpine
 
 RUN apk update && \
     apk upgrade && \
-    apk add ruby-dev build-base mariadb-dev && \
-    rm -rf /var/cache/apk/*
+    apk add ruby-dev build-base && \
+    rm -rf /var/cache/apk/* \
+    default-jdk \
+    postgresql-client 
 
 WORKDIR /usr/src/app
-COPY Gemfile* ./
+
+COPY Gemfile Gemfile
+
 RUN bundle install
+
 COPY . .
 
-EXPOSE 3000
+EXPOSE 8080
 CMD ["rails", "-s"]
