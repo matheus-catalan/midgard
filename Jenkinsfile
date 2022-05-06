@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 ") {
-                        sh 'rails route'
+                        sh 'rails routes'
                         // sh 'rspec spec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
                     }
                 }
