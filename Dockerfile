@@ -26,7 +26,13 @@ FROM ruby:2.7.2-alpine
 
 RUN apk update && \
     apk upgrade && \
-    apk add ruby-dev build-base openjdk11 git postgresql-client &&  \
+    apk add \
+    ruby-dev \
+    build-base \
+    openjdk11 \
+    git \
+    postgresql-client \
+    libpq && \
     rm -rf /var/cache/apk/*
 
 WORKDIR /usr/src/app
