@@ -27,9 +27,10 @@ FROM ruby:2.7.2-alpine
 RUN apk update && \
     apk upgrade && \
     apk add ruby-dev build-base && \
-    rm -rf /var/cache/apk/* \
     default-jdk \
-    postgresql-client 
+    postgresql-client \
+    git \
+    rm -rf /var/cache/apk/* 
 
 WORKDIR /usr/src/app
 
