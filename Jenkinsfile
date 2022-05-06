@@ -46,8 +46,7 @@ pipeline {
             steps {
                 script {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 ") {
-                        // sh 'ls'
-                        // sh 'rspec --backtrace'
+                        sh 'rails route'
                         // sh 'rspec spec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
                     }
                 }
@@ -81,23 +80,4 @@ pipeline {
     }
 }
 
-def databaseHealthy(){
-  sh (
-    script: "docker inspect --format '{{.State.Health.Status}}' $NAME_CONTAINER_DB_TEST",
-    returnStdout: true
-  ).trim().equals('healthy')
-}
 
-def databaseRunning(){
-  sh (
-    script: "docker inspect --format='{{.State.Running}}' $NAME_CONTAINER_DB_TEST",
-    returnStdout: true
-  ).trim().equals('true')
-}
-
-def databaseExists(){
-  sh (
-    script: "docker inspect $NAME_CONTAINER_DB_TEST -f {}",
-    returnStatus: true
-  ) == 0
-}
