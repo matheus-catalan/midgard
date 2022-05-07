@@ -10,10 +10,13 @@ RUN apt-get update \
 WORKDIR /usr/src/app
 
 COPY Gemfile Gemfile
-# COPY Gemfile.lock Gemfile.lock
-COPY ./.docker/application.yml application.yml
+COPY Gemfile.lock Gemfile.lock
 
-RUN bundle install --jobs 20 --retry 5
+RUN gem install bundler -v 2.0.2
+
+# RUN bundle install --jobs 20 --retry 5
+RUN bundle check || bundle install
+
 
 COPY . .
 
