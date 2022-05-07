@@ -46,7 +46,7 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
-                    dockerapp.inside("--network=$NAME_NETWORK -v ./.docker:.docker --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
+                    dockerapp.inside("--network=$NAME_NETWORK -v ./.docker/:.docker/ --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
                         sh 'cp .docker/application.yml ./config'
                         sh 'RAILS_ENV=test bundle install'
                         // sh 'rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
