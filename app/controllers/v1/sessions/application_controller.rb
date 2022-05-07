@@ -17,7 +17,7 @@ module V1
       before_action :authorized?, only: %i[show update destroy]
 
       def record_errors(invalid)
-        return render json: { error: invalid.record.errors }, status: :unprocessable_entity
+        # return render json: { error: invalid.record.errors }, status: :unprocessable_entity
       end
 
       def set_user
