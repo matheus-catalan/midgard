@@ -14,7 +14,7 @@ module V1
       before_action :authenticate, only: %i[create]
       before_action :set_session, only: %i[create]
       before_action :set_device, only: %i[create]
-      # before_action :authorized?, only: %i[show update destroy]
+      before_action :authorized?, only: %i[show update destroy]
 
       def record_errors(invalid)
         return render json: { error: invalid.record.errors }, status: :unprocessable_entity
@@ -22,7 +22,7 @@ module V1
 
       def set_user
         @user = User.find_by(email: sessions_params[:email])
-        # return render json: { error: 'Invalid email or password' }, status: :unauthorized if @user.nil?
+        return render json: { error: 'Invalid email or password' }, status: :unauthorized if @user.nil?
       end
 
       def authenticate
