@@ -19,30 +19,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["rails", "server", "-p", "8080", "-b", "0.0.0.0"]
 CMD ["rails", "-s"]
-
-# FROM ruby:2.7.2-alpine
-
-
-# RUN apk update && \
-#     apk upgrade && \
-#     apk add \
-#     ruby-dev \
-#     build-base \
-#     openjdk11 \
-#     git \
-#     postgresql-client \
-#     postgresql-dev && \
-#     rm -rf /var/cache/apk/*
-
-# WORKDIR /usr/src/app
-
-# COPY Gemfile Gemfile
-
-# RUN bundle install --jobs 20 --retry 5
-
-# COPY . .
-
-# EXPOSE 8080
-# CMD ["rails", "-s"]
