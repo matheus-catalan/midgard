@@ -22,7 +22,7 @@ module V1
 
       def set_user
         @user = User.find_by(email: sessions_params[:email])
-        return render json: { error: 'Invalid email or password' }, status: :unauthorized if @user.nil?
+        # return render json: { error: 'Invalid email or password' }, status: :unauthorized if @user.nil?
       end
 
       def authenticate
