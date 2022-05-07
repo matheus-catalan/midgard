@@ -11,6 +11,7 @@ WORKDIR /usr/src/app
 
 COPY Gemfile Gemfile
 # COPY Gemfile.lock Gemfile.lock
+COPY ./.docker/application.yml application.yml
 
 RUN bundle install --jobs 20 --retry 5
 
