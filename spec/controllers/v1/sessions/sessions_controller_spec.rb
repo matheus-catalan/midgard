@@ -133,99 +133,99 @@ RSpec.describe 'Sessions resource', type: :request do
       expect(res['error']['ip_address']).to eq(['is too long (maximum is 15 characters)', 'is invalid'])
     end
 
-  #   it 'it should not create sessions when device without ip address' do
-  #     user = create(:user, :valid)
+    it 'it should not create sessions when device without ip address' do
+      user = create(:user, :valid)
 
-  #     post '/v1/sessions', params: {
-  #       user: {
-  #         email: user.email,
-  #         password: user.password,
-  #         should_expire: true
-  #       },
-  #       device: {
-  #         name: 'iPhone',
-  #         user_agent: Faker::Internet.user_agent,
-  #         platform: rand(0..1) == 0 ? 'ios' : 'android'
-  #       }
-  #     }
+      post '/v1/sessions', params: {
+        user: {
+          email: user.email,
+          password: user.password,
+          should_expire: true
+        },
+        device: {
+          name: 'iPhone',
+          user_agent: Faker::Internet.user_agent,
+          platform: rand(0..1) == 0 ? 'ios' : 'android'
+        }
+      }
 
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['ip_address']).to eq(["can't be blank", 'is invalid'])
-  #   end
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['ip_address']).to eq(["can't be blank", 'is invalid'])
+    end
 
-  #   it 'it should not create sessions when device without user agent' do
-  #     user = create(:user, :valid)
+    it 'it should not create sessions when device without user agent' do
+      user = create(:user, :valid)
 
-  #     post '/v1/sessions', params: {
-  #       user: {
-  #         email: user.email,
-  #         password: user.password,
-  #         should_expire: true
-  #       },
-  #       device: {
-  #         name: 'iPhone',
-  #         ip_address: Faker::Internet.ip_v4_address,
-  #         platform: rand(0..1) == 0 ? 'ios' : 'android'
-  #       }
-  #     }
+      post '/v1/sessions', params: {
+        user: {
+          email: user.email,
+          password: user.password,
+          should_expire: true
+        },
+        device: {
+          name: 'iPhone',
+          ip_address: Faker::Internet.ip_v4_address,
+          platform: rand(0..1) == 0 ? 'ios' : 'android'
+        }
+      }
 
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['user_agent']).to eq(["can't be blank"])
-  #   end
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['user_agent']).to eq(["can't be blank"])
+    end
 
-  #   it 'it should not create sessions when device without platform' do
-  #     user = create(:user, :valid)
+    it 'it should not create sessions when device without platform' do
+      user = create(:user, :valid)
 
-  #     post '/v1/sessions', params: {
-  #       user: {
-  #         email: user.email,
-  #         password: user.password,
-  #         should_expire: true
-  #       },
-  #       device: {
-  #         name: 'iPhone',
-  #         ip_address: Faker::Internet.ip_v4_address,
-  #         user_agent: Faker::Internet.user_agent
-  #       }
-  #     }
+      post '/v1/sessions', params: {
+        user: {
+          email: user.email,
+          password: user.password,
+          should_expire: true
+        },
+        device: {
+          name: 'iPhone',
+          ip_address: Faker::Internet.ip_v4_address,
+          user_agent: Faker::Internet.user_agent
+        }
+      }
 
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['platform']).to eq(["can't be blank"])
-  #   end
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['platform']).to eq(["can't be blank"])
+    end
 
-  #   it 'it should not create sessions without user' do
-  #     post '/v1/sessions', params: {
-  #       device: {
-  #         name: 'iPhone',
-  #         ip_address: Faker::Internet.ip_v4_address,
-  #         user_agent: Faker::Internet.user_agent,
-  #         platform: rand(0..1) == 0 ? 'ios' : 'android'
-  #       }
-  #     }
+    it 'it should not create sessions without user' do
+      post '/v1/sessions', params: {
+        device: {
+          name: 'iPhone',
+          ip_address: Faker::Internet.ip_v4_address,
+          user_agent: Faker::Internet.user_agent,
+          platform: rand(0..1) == 0 ? 'ios' : 'android'
+        }
+      }
 
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']).to eq('param is missing or the value is empty: user')
-  #   end
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']).to eq('param is missing or the value is empty: user')
+    end
 
-  #   it 'it should not create sessions without device' do
-  #     user = create(:user, :valid)
+    it 'it should not create sessions without device' do
+      user = create(:user, :valid)
 
-  #     post '/v1/sessions', params: {
-  #       user: {
-  #         email: user.email,
-  #         password: user.password,
-  #         should_expire: true
-  #       }
-  #     }
+      post '/v1/sessions', params: {
+        user: {
+          email: user.email,
+          password: user.password,
+          should_expire: true
+        }
+      }
 
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']).to eq('param is missing or the value is empty: device')
-  #   end
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']).to eq('param is missing or the value is empty: device')
+    end
   end
 
   # describe 'SHOW' do
