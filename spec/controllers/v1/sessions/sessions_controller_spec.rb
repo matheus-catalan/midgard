@@ -247,7 +247,7 @@ RSpec.describe 'Sessions resource', type: :request do
     #                               'uid' => user.uid,
     #                               'status' => user.status
     #                             })
-    # end
+    end
 
     # it 'it should not return session with user_id incorrect' do
     #   user = create(:user, :valid)
