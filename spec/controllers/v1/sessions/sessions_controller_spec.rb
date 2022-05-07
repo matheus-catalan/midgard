@@ -233,21 +233,21 @@ RSpec.describe 'Sessions resource', type: :request do
       user = create(:user, :valid)
       jwt = JWT.encode({ user_id: user.id }, ENV['SECRET_KEY_BASE'])
       session = create(:session, :valid, user: user, token: jwt)
-      get '/v1/sessions/me',
-          headers: { 'Authorization' => "Bearer #{jwt}" }
+    #   get '/v1/sessions/me',
+    #       headers: { 'Authorization' => "Bearer #{jwt}" }
 
-      expect(response).to have_http_status(200)
-      expect(res['session']['token']).to eq(jwt)
-      expect(res['session']['expires_at'].to_datetime).to be > session.expires_at.to_datetime
-      expect(res['session']['should_expire']).to eq(session.should_expire)
-      expect(res['user']).to eq({
-                                  'id' => user.id,
-                                  'email' => user.email,
-                                  'name' => user.name,
-                                  'uid' => user.uid,
-                                  'status' => user.status
-                                })
-    end
+    #   expect(response).to have_http_status(200)
+    #   expect(res['session']['token']).to eq(jwt)
+    #   expect(res['session']['expires_at'].to_datetime).to be > session.expires_at.to_datetime
+    #   expect(res['session']['should_expire']).to eq(session.should_expire)
+    #   expect(res['user']).to eq({
+    #                               'id' => user.id,
+    #                               'email' => user.email,
+    #                               'name' => user.name,
+    #                               'uid' => user.uid,
+    #                               'status' => user.status
+    #                             })
+    # end
 
     # it 'it should not return session with user_id incorrect' do
     #   user = create(:user, :valid)
