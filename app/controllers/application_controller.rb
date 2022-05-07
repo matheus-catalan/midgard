@@ -18,7 +18,7 @@ class ApplicationController < ActionController::API
     return error('Unauthorized: Token Bearer is missing') if request.headers['Authorization'].nil?
 
     @user = User.find_by(id: decode_token['user_id'])
-    return error('Unauthorized: User not found') if @user.nil?
+    # return error('Unauthorized: User not found') if @user.nil?
     # return error('Unauthorized: User disabled') unless @user.status
 
     @session = Session.find_by(token: token_jwt, user_id: @user.id)
