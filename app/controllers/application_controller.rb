@@ -7,11 +7,11 @@ class ApplicationController < ActionController::API
     class_name = self.class.name.split('::').last
     class_name = class_name.remove('Controller')
     class_name = class_name.singularize
-    render json: { error: "#{class_name} not found" }, status: 404
+    return render json: { error: "#{class_name} not found" }, status: 404
   end
 
   def record_errors(invalid)
-    render json: { error: invalid.record.errors }, status: :unprocessable_entity
+    return render json: { error: invalid.record.errors }, status: :unprocessable_entity
   end
 
   def authorized?
@@ -44,6 +44,6 @@ class ApplicationController < ActionController::API
   end
 
   def error(message = 'Unauthorized')
-    render json: { error: message }, status: :unauthorized
+    return render json: { error: message }, status: :unauthorized
   end
 end
