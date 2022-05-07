@@ -22,12 +22,12 @@ module V1
 
       def set_user
         @user = User.find_by(email: sessions_params[:email])
-        return error('Invalid email or password') if @user.nil?
+        error('Invalid email or password') if @user.nil?
       end
 
       def authenticate
         unless @user.authenticate(sessions_params[:password])
-          return error('Invalid email or password')
+          error('Invalid email or password')
         end
       end
 
