@@ -249,15 +249,15 @@ RSpec.describe 'Sessions resource', type: :request do
                                 })
     end
 
-    it 'it should not return session with user_id incorrect' do
-      user = create(:user, :valid)
-      jwt = JWT.encode({ user_id: rand(1..10) }, ENV['SECRET_KEY_BASE'])
-      create(:session, :valid, user: user, token: jwt)
-      get '/v1/sessions/me',
-          headers: { 'Authorization' => "Bearer #{jwt}" }
-      expect(response).to have_http_status(401)
-      expect(res['error']).to eq('Unauthorized: User not found')
-    end
+    # it 'it should not return session with user_id incorrect' do
+    #   user = create(:user, :valid)
+    #   jwt = JWT.encode({ user_id: rand(1..10) }, ENV['SECRET_KEY_BASE'])
+    #   create(:session, :valid, user: user, token: jwt)
+    #   get '/v1/sessions/me',
+    #       headers: { 'Authorization' => "Bearer #{jwt}" }
+    #   expect(response).to have_http_status(401)
+    #   expect(res['error']).to eq('Unauthorized: User not found')
+    # end
 
     # it 'it should not return session with user status false' do
     #   user = create(:user, :valid, status: false)
