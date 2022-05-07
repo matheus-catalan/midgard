@@ -67,27 +67,27 @@ RSpec.describe 'Sessions resource', type: :request do
       expect(Device.count).to eq(2)
     end
 
-  #   it 'it should not create sessions when email incorrect' do
-  #     user = create(:user, :valid)
+    it 'it should not create sessions when email incorrect' do
+      user = create(:user, :valid)
 
-  #     post '/v1/sessions', params: {
-  #       user: {
-  #         email: Faker::Internet.email,
-  #         password: user.password,
-  #         should_expire: true
-  #       },
-  #       device: {
-  #         name: 'iPhone',
-  #         ip_address: Faker::Internet.ip_v4_address,
-  #         user_agent: Faker::Internet.user_agent,
-  #         platform: rand(0..1) == 0 ? 'ios' : 'android'
-  #       }
-  #     }
+      post '/v1/sessions', params: {
+        user: {
+          email: Faker::Internet.email,
+          password: user.password,
+          should_expire: true
+        },
+        device: {
+          name: 'iPhone',
+          ip_address: Faker::Internet.ip_v4_address,
+          user_agent: Faker::Internet.user_agent,
+          platform: rand(0..1) == 0 ? 'ios' : 'android'
+        }
+      }
 
-  #     expect(response).to have_http_status(401)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']).to eq('Invalid email or password')
-  #   end
+      expect(response).to have_http_status(401)
+      expect(res['error']).to be_present
+      expect(res['error']).to eq('Invalid email or password')
+    end
 
   #   it 'it should not create sessions when password incorrect' do
   #     user = create(:user, :valid)
