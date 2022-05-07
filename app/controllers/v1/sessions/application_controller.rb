@@ -22,12 +22,12 @@ module V1
 
       def set_user
         @user = User.find_by(email: sessions_params[:email])
-        # return render json: { error: 'Invalid email or password' }, status: :unauthorized if @user.nil?
+        return error('Invalid email or password') if @user.nil?
       end
 
       def authenticate
         unless @user.authenticate(sessions_params[:password])
-          return render json: { error: 'Invalid email or password' }, status: :unauthorized
+          return error('Invalid email or password')
         end
       end
 
@@ -43,6 +43,10 @@ module V1
 
       def make_token(payload)
         JWT.encode(payload, ENV['SECRET_KEY_BASE'])
+      end
+
+      def error(message = 'Unauthorized')
+        return render json: { error: message }, status: :unauthorized
       end
     end
   end
