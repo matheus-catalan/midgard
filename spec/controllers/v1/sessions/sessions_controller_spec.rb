@@ -233,8 +233,8 @@ RSpec.describe 'Sessions resource', type: :request do
       user = create(:user, :valid)
       jwt = JWT.encode({ user_id: user.id }, ENV['SECRET_KEY_BASE'])
       session = create(:session, :valid, user: user, token: jwt)
-    #   get '/v1/sessions/me',
-    #       headers: { 'Authorization' => "Bearer #{jwt}" }
+      get '/v1/sessions/me',
+          headers: { 'Authorization' => "Bearer #{jwt}" }
 
     #   expect(response).to have_http_status(200)
     #   expect(res['session']['token']).to eq(jwt)
