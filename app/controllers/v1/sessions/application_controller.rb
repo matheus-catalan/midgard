@@ -17,25 +17,40 @@ module V1
       before_action :authorized?, only: %i[show update destroy]
 
       def record_errors(invalid)
-        # return render json: { error: invalid.record.errors }, status: :unprocessable_entity
+        p '==================  record_errors  ================'
+        p  'record_errors' 
+        p '==================  record_errors  ================'
+        return render json: { error: invalid.record.errors }, status: :unprocessable_entity
       end
 
       def set_user
+        p '==================  set_user  ================'
+        p  'set_user' 
+        p '==================  set_user  ================'
         @user = User.find_by(email: sessions_params[:email])
         error('Invalid email or password') if @user.nil?
       end
 
       def authenticate
+        p '==================  authenticate  ================'
+        p  'authenticate' 
+        p '==================  authenticate  ================'
         unless @user.authenticate(sessions_params[:password])
           error('Invalid email or password')
         end
       end
 
       def set_session
+        p '==================  set_session  ================'
+        p  'set_session' 
+        p '==================  set_session  ================'
         return @session = Session.find_by(user_id: @user.id)
       end
 
       def set_device
+        p '================== set_device ================'
+        p 'set_device'
+        p '================== set_device ================'
         return @device = Device.find_or_create_by!(device_params.merge(user_id: @user.id))
         # aqui disparar uma mensagem para o serviço de notificação caso o device
         # não exista informando um novo aparelho logado em sua conta
@@ -46,6 +61,9 @@ module V1
       end
 
       def error(message = 'Unauthorized')
+        p '==================  error  ================'
+        p  'error' 
+        p '==================  error  ================'
         return render json: { error: message }, status: :unauthorized
       end
     end
