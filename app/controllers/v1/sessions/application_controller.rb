@@ -3,8 +3,8 @@
 module V1
   module Sessions
     class ApplicationController < ApplicationController
-      # rescue_from ActiveRecord::RecordInvalid, with: :record_errors
-      # rescue_from ActiveRecord::RecordNotSaved, with: :record_errors
+      rescue_from ActiveRecord::RecordInvalid, with: :record_errors
+      rescue_from ActiveRecord::RecordNotSaved, with: :record_errors
       # rescue_from ActionController::ParameterMissing do |parameter_missing_exception|
       #   render json: { error: "param is missing or the value is empty: #{parameter_missing_exception.param}" },
       #          status: :unprocessable_entity
