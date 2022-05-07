@@ -57,12 +57,6 @@ pipeline {
             }
         }
 
-        stage ('Test') {
-            steps {
-                sh './gradlew check'
-            }
-        }
-
 
         // stage ('Cleanup Containers') {
         //     steps {
