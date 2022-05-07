@@ -5,16 +5,16 @@ module V1
     class ApplicationController < ApplicationController
       rescue_from ActiveRecord::RecordInvalid, with: :record_errors
       rescue_from ActiveRecord::RecordNotSaved, with: :record_errors
-      # rescue_from ActionController::ParameterMissing do |parameter_missing_exception|
-      #   render json: { error: "param is missing or the value is empty: #{parameter_missing_exception.param}" },
-      #          status: :unprocessable_entity
-      # end
+      rescue_from ActionController::ParameterMissing do |parameter_missing_exception|
+        render json: { error: "param is missing or the value is empty: #{parameter_missing_exception.param}" },
+               status: :unprocessable_entity
+      end
 
       before_action :set_user, only: %i[create]
       before_action :authenticate, only: %i[create]
       before_action :set_session, only: %i[create]
       before_action :set_device, only: %i[create]
-      before_action :authorized?, only: %i[show update destroy]
+      # before_action :authorized?, only: %i[show update destroy]
 
       def record_errors(invalid)
         return render json: { error: invalid.record.errors }, status: :unprocessable_entity
