@@ -41,31 +41,31 @@ RSpec.describe 'Sessions resource', type: :request do
       expect(res['session']['should_expire']).to eq(true)
     end
 
-  #   it 'it should create session, create a new device when there is already one and authenticate user' do
-  #     user = create(:user, :valid)
-  #     create(:device, :valid, user: user)
+    it 'it should create session, create a new device when there is already one and authenticate user' do
+      user = create(:user, :valid)
+      create(:device, :valid, user: user)
 
-  #     post '/v1/sessions', params: {
-  #       user: {
-  #         email: user.email,
-  #         password: user.password,
-  #         should_expire: true
-  #       },
-  #       device: {
-  #         name: 'iPhone',
-  #         ip_address: Faker::Internet.ip_v4_address,
-  #         user_agent: Faker::Internet.user_agent,
-  #         platform: rand(0..1) == 0 ? 'ios' : 'android'
-  #       }
-  #     }
+      post '/v1/sessions', params: {
+        user: {
+          email: user.email,
+          password: user.password,
+          should_expire: true
+        },
+        device: {
+          name: 'iPhone',
+          ip_address: Faker::Internet.ip_v4_address,
+          user_agent: Faker::Internet.user_agent,
+          platform: rand(0..1) == 0 ? 'ios' : 'android'
+        }
+      }
 
-  #     expect(response).to have_http_status(200)
-  #     expect(res['session']).to be_present
-  #     expect(res['session']['token']).to eq(JWT.encode({ user_id: user.id }, ENV['SECRET_KEY_BASE']))
-  #     expect(res['session']['expires_at'].to_datetime).to be <= Time.now + 1.day
-  #     expect(res['session']['should_expire']).to eq(true)
-  #     expect(Device.count).to eq(2)
-  #   end
+      expect(response).to have_http_status(200)
+      expect(res['session']).to be_present
+      expect(res['session']['token']).to eq(JWT.encode({ user_id: user.id }, ENV['SECRET_KEY_BASE']))
+      expect(res['session']['expires_at'].to_datetime).to be <= Time.now + 1.day
+      expect(res['session']['should_expire']).to eq(true)
+      expect(Device.count).to eq(2)
+    end
 
   #   it 'it should not create sessions when email incorrect' do
   #     user = create(:user, :valid)
