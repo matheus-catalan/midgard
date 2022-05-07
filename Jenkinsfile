@@ -50,8 +50,7 @@ pipeline {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
                         sh 'RAILS_ENV=test bundle install'
                         sh 'RAILS_ENV=test bundle exec rake db:migrate'
-                        // sh 'rspec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
-                        sh 'RAILS_ENV=test bundle exec rspec spec'
+                        sh 'RAILS_ENV=test bundle exec rspec spec --format progress --format RspecJunitFormatter --out tmp/rspec.xml'
                     }
                 }
             }
