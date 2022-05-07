@@ -12,5 +12,7 @@ test_database_pass: "test"
 
 LOG_LEVEL: "debug"
 
+SECRET_KEY_BASE: "teste"
+
 REDIS_URL: "redis://:root123@redis:6379"
 REDIS_CACHE_PATH: "0/cache"
