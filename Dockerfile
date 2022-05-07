@@ -17,7 +17,6 @@ RUN gem install bundler -v 2.0.2
 # RUN bundle install --jobs 20 --retry 5
 RUN bundle check || bundle install
 
-
 COPY . .
 
 EXPOSE 8080

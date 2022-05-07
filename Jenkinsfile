@@ -21,14 +21,8 @@ pipeline {
         stage ('Preparing workspace to run the tests') {
             steps {
                 script {
-                    
-                    sh "echo '===========> Create network $NAME_NETWORK to test <==========='"
                     sh "docker network ls|grep $NAME_NETWORK > /dev/null || docker network create $NAME_NETWORK"
-                    
-                    sh "echo '===========> Remove old containers <==========='"
                     sh "docker rm -f $NAME_CONTAINER_DB_TEST $NAME_CONTAINER_SERVICE_TEST > /dev/null"
-
-                    sh "echo '===========> Create databases $NAME_CONTAINER_DB_TEST to test <==========='"
                     docker.image('postgres:13').run(
                         "-it --rm --name $NAME_CONTAINER_DB_TEST " + 
                         "--network=$NAME_NETWORK " + 
@@ -49,8 +43,8 @@ pipeline {
                 script {
                     sh 'cp .docker/application.yml ./config'
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
-                        sh 'RAILS_ENV=test bundle install --quiet --jobs 20'
-                        sh 'RAILS_ENV=test bundle exec rake db:migrate'
+                        // sh 'RAILS_ENV=test bundle install --quiet --jobs 20'
+                        // sh 'RAILS_ENV=test bundle exec rake db:migrate'
                         sh 'RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml'
                     }
                 }
