@@ -34,7 +34,7 @@ class ApplicationController < ActionController::API
   end
 
   def decode_token
-    JWT.decode(token_jwt, ENV['SECRET_KEY_BASE'], true, algorithm: 'HS256')[0]
+    return JWT.decode(token_jwt, ENV['SECRET_KEY_BASE'], true, algorithm: 'HS256')[0]
   rescue JWT::DecodeError
     return error('Unauthorized: Token Bearer is invalid')
   end

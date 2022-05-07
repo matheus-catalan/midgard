@@ -32,11 +32,11 @@ module V1
       end
 
       def set_session
-        @session = Session.find_by(user_id: @user.id)
+        return @session = Session.find_by(user_id: @user.id)
       end
 
       def set_device
-        @device = Device.find_or_create_by!(device_params.merge(user_id: @user.id))
+        return @device = Device.find_or_create_by!(device_params.merge(user_id: @user.id))
         # aqui disparar uma mensagem para o serviço de notificação caso o device
         # não exista informando um novo aparelho logado em sua conta
       end
