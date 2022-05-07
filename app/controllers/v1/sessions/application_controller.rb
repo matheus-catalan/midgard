@@ -17,7 +17,7 @@ module V1
       before_action :authorized?, only: %i[show update destroy]
 
       def record_errors(invalid)
-        render json: { error: invalid.record.errors }, status: :unprocessable_entity
+        return render json: { error: invalid.record.errors }, status: :unprocessable_entity
       end
 
       def set_user
@@ -27,7 +27,7 @@ module V1
 
       def authenticate
         unless @user.authenticate(sessions_params[:password])
-          render json: { error: 'Invalid email or password' }, status: :unauthorized
+          return render json: { error: 'Invalid email or password' }, status: :unauthorized
         end
       end
 
