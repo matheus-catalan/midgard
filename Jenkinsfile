@@ -32,7 +32,7 @@ pipeline {
                     docker.image('postgres:13').run(
                         "-it --rm --name $NAME_CONTAINER_DB_TEST " + 
                         "--network=$NAME_NETWORK " + 
-                        "../databases/db-test/:/var/lib/postgresql/data/" +
+                        "../databases/db-test/:/var/lib/postgresql/data/ " +
                         "-e POSTGRES_DB=$POSTGRES_DB " + 
                         "-e POSTGRES_USER=$POSTGRES_USER " + 
                         "-e POSTGRES_PASSWORD=$POSTGRES_PASSWORD "+ 
