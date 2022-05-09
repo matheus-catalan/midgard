@@ -43,7 +43,7 @@ pipeline {
             steps {
                 script {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
-                        sh 'RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml --format progress --out tmp/rspec.txt'
+                        sh 'RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml --format documentation --out tmp/rspec.txt'
 
                         // archive includes: 'pkg/*.gem'
 
