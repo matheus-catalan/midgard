@@ -39,11 +39,22 @@ pipeline {
             }
         }
 
-        stage ('Run Tests') {
+        stage ('Run Tests and report results and coverage') {
             steps {
                 script {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
-                        sh 'RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml'
+                        sh 'RAILS_ENV=test bundle exec rspec spec/* --format RspecJunitFormatter --out tmp/rspec.xml'
+
+                        archive includes: 'pkg/*.gem'
+
+                        publishHTML target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: 'coverage',
+                            reportFiles: 'index.html',
+                            reportName: 'RCov Report'
+                        ]
                     }
                 }
             }
@@ -76,6 +87,8 @@ pipeline {
         }
         always {
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
+            sh "docker network rm $NAME_NETWORK"
+
         }
     }
 }
