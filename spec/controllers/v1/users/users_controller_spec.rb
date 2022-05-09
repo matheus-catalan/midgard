@@ -25,160 +25,160 @@ RSpec.describe 'Users resource', type: :request do
     end
   end
 
-  # describe 'CREATE' do
-  #   it 'it should create user and return user created' do
-  #     user_payload = attributes_for(:user, :valid)
-  #     post '/v1/users', params: { user: user_payload }
+  describe 'CREATE' do
+    it 'it should create user and return user created' do
+      user_payload = attributes_for(:user, :valid)
+      post '/v1/users', params: { user: user_payload }
 
-  #     expect(response).to have_http_status(200)
-  #     expect(res['user']).to be_present
+      expect(response).to have_http_status(200)
+      expect(res['user']).to be_present
 
-  #     user = User.find(res['user']['id'])
+      user = User.find(res['user']['id'])
 
-  #     expect(user.name).to eq(user_payload[:name])
-  #     expect(user.email).to eq(user_payload[:email])
-  #     expect(user.status).to eq(user_payload[:status])
-  #     expect(user.authenticate(user_payload[:password])).to be_truthy
-  #   end
+      expect(user.name).to eq(user_payload[:name])
+      expect(user.email).to eq(user_payload[:email])
+      expect(user.status).to eq(user_payload[:status])
+      expect(user.authenticate(user_payload[:password])).to be_truthy
+    end
 
-  #   it 'it should not create user without name' do
-  #     user_payload = attributes_for(:user, :without_name)
-  #     post '/v1/users', params: { user: user_payload }
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['name']).to eq(["can't be blank"])
-  #   end
+    it 'it should not create user without name' do
+      user_payload = attributes_for(:user, :without_name)
+      post '/v1/users', params: { user: user_payload }
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['name']).to eq(["can't be blank"])
+    end
 
-  #   it 'it should not create user without email' do
-  #     user_payload = attributes_for(:user, :without_email)
-  #     post '/v1/users', params: { user: user_payload }
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['email']).to eq(["can't be blank", 'is invalid'])
-  #   end
+    it 'it should not create user without email' do
+      user_payload = attributes_for(:user, :without_email)
+      post '/v1/users', params: { user: user_payload }
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['email']).to eq(["can't be blank", 'is invalid'])
+    end
 
-  #   it 'it should not create user with invalid email' do
-  #     user_payload = attributes_for(:user, :with_invalid_email)
-  #     post '/v1/users', params: { user: user_payload }
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['email']).to eq(['is invalid'])
-  #   end
+    it 'it should not create user with invalid email' do
+      user_payload = attributes_for(:user, :with_invalid_email)
+      post '/v1/users', params: { user: user_payload }
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['email']).to eq(['is invalid'])
+    end
 
-  #   it 'it should not create user with email duplicated' do
-  #     user = create(:user, :valid)
-  #     user_payload = attributes_for(:user, :valid, email: user.email)
-  #     post '/v1/users', params: { user: user_payload }
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['email']).to eq(['has already been taken'])
-  #   end
+    it 'it should not create user with email duplicated' do
+      user = create(:user, :valid)
+      user_payload = attributes_for(:user, :valid, email: user.email)
+      post '/v1/users', params: { user: user_payload }
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['email']).to eq(['has already been taken'])
+    end
 
-  #   it 'it should not create user without password' do
-  #     user_payload = attributes_for(:user, :without_password)
-  #     post '/v1/users', params: { user: user_payload }
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['password']).to eq(["can't be blank"])
-  #   end
-  # end
+    it 'it should not create user without password' do
+      user_payload = attributes_for(:user, :without_password)
+      post '/v1/users', params: { user: user_payload }
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['password']).to eq(["can't be blank"])
+    end
+  end
 
-  # describe 'SHOW' do
-  #   it 'it should return user with id' do
-  #     user = create(:user, :valid)
+  describe 'SHOW' do
+    it 'it should return user with id' do
+      user = create(:user, :valid)
 
-  #     get "/v1/users/#{user.id}"
+      get "/v1/users/#{user.id}"
 
-  #     expect(response).to have_http_status(200)
-  #     expect(user.name).to eq(res['user']['name'])
-  #     expect(user.email).to eq(res['user']['email'])
-  #     expect(user.status).to eq(res['user']['status'])
-  #   end
+      expect(response).to have_http_status(200)
+      expect(user.name).to eq(res['user']['name'])
+      expect(user.email).to eq(res['user']['email'])
+      expect(user.status).to eq(res['user']['status'])
+    end
 
-  #   it 'it should not return user with id nonexistent' do
-  #     create(:user, :valid)
+    it 'it should not return user with id nonexistent' do
+      create(:user, :valid)
 
-  #     get "/v1/users/#{rand(1..100)}"
+      get "/v1/users/#{rand(1..100)}"
 
-  #     expect(response).to have_http_status(404)
-  #     expect(res['error']).to eq('User not found')
-  #   end
-  # end
+      expect(response).to have_http_status(404)
+      expect(res['error']).to eq('User not found')
+    end
+  end
 
-  # describe 'UPDATE' do
-  #   it 'it should updated user and return user updatedd' do
-  #     user_id = create(:user, :valid).id
-  #     user_payload = attributes_for(:user, :valid)
-  #     put "/v1/users/#{user_id}", params: { user: user_payload }
+  describe 'UPDATE' do
+    it 'it should updated user and return user updatedd' do
+      user_id = create(:user, :valid).id
+      user_payload = attributes_for(:user, :valid)
+      put "/v1/users/#{user_id}", params: { user: user_payload }
 
-  #     expect(response).to have_http_status(200)
-  #     expect(res['user']).to be_present
+      expect(response).to have_http_status(200)
+      expect(res['user']).to be_present
 
-  #     user = User.find(res['user']['id'])
+      user = User.find(res['user']['id'])
 
-  #     expect(user.name).to eq(user_payload[:name])
-  #     expect(user.email).to eq(user_payload[:email])
-  #     expect(user.status).to eq(user_payload[:status])
-  #   end
+      expect(user.name).to eq(user_payload[:name])
+      expect(user.email).to eq(user_payload[:email])
+      expect(user.status).to eq(user_payload[:status])
+    end
 
-  #   it 'it should not create user with id invalid' do
-  #     create(:user, :valid).id
-  #     user_payload = attributes_for(:user, :valid)
-  #     put "/v1/users/#{rand(1..100)}", params: { user: user_payload }
+    it 'it should not create user with id invalid' do
+      create(:user, :valid).id
+      user_payload = attributes_for(:user, :valid)
+      put "/v1/users/#{rand(1..100)}", params: { user: user_payload }
 
-  #     expect(response).to have_http_status(404)
-  #     expect(res['error']).to eq('User not found')
-  #   end
+      expect(response).to have_http_status(404)
+      expect(res['error']).to eq('User not found')
+    end
 
-  #   it 'it should not create user with name invalid' do
-  #     user_id = create(:user, :valid).id
-  #     user_payload = attributes_for(:user, :with_invalid_name)
-  #     put "/v1/users/#{user_id}", params: { user: user_payload }
+    it 'it should not create user with name invalid' do
+      user_id = create(:user, :valid).id
+      user_payload = attributes_for(:user, :with_invalid_name)
+      put "/v1/users/#{user_id}", params: { user: user_payload }
 
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['name']).to eq(['is too long (maximum is 50 characters)'])
-  #   end
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['name']).to eq(['is too long (maximum is 50 characters)'])
+    end
 
-  #   it 'it should not update user with invalid email' do
-  #     user_id = create(:user, :valid).id
-  #     user_payload = attributes_for(:user, :with_invalid_email)
-  #     put "/v1/users/#{user_id}", params: { user: user_payload }
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['email']).to eq(['is invalid'])
-  #   end
+    it 'it should not update user with invalid email' do
+      user_id = create(:user, :valid).id
+      user_payload = attributes_for(:user, :with_invalid_email)
+      put "/v1/users/#{user_id}", params: { user: user_payload }
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['email']).to eq(['is invalid'])
+    end
 
-  #   it 'it should not create update with email duplicated' do
-  #     user1 = create(:user, :valid)
-  #     user2 = create(:user, :valid)
-  #     user_payload = attributes_for(:user, :valid, email: user2.email)
-  #     put "/v1/users/#{user1.id}", params: { user: user_payload }
-  #     expect(response).to have_http_status(422)
-  #     expect(res['error']).to be_present
-  #     expect(res['error']['email']).to eq(['has already been taken'])
-  #   end
-  # end
+    it 'it should not create update with email duplicated' do
+      user1 = create(:user, :valid)
+      user2 = create(:user, :valid)
+      user_payload = attributes_for(:user, :valid, email: user2.email)
+      put "/v1/users/#{user1.id}", params: { user: user_payload }
+      expect(response).to have_http_status(422)
+      expect(res['error']).to be_present
+      expect(res['error']['email']).to eq(['has already been taken'])
+    end
+  end
 
-  # describe 'DESTROY' do
-  #   it 'it should destroy user and return user destroyd' do
-  #     user = create(:user, :valid)
+  describe 'DESTROY' do
+    it 'it should destroy user and return user destroyd' do
+      user = create(:user, :valid)
 
-  #     delete "/v1/users/#{user.id}"
+      delete "/v1/users/#{user.id}"
 
-  #     expect(response).to have_http_status(200)
-  #     expect(res['user']).to be_present
+      expect(response).to have_http_status(200)
+      expect(res['user']).to be_present
 
-  #     expect(User.find_by(id: user.id)).to be_nil
-  #   end
+      expect(User.find_by(id: user.id)).to be_nil
+    end
 
-  #   it 'it should not destroy user with id invalid' do
-  #     create(:user, :valid)
+    it 'it should not destroy user with id invalid' do
+      create(:user, :valid)
 
-  #     delete "/v1/users/#{rand(1..100)}"
+      delete "/v1/users/#{rand(1..100)}"
 
-  #     expect(response).to have_http_status(404)
-  #     expect(res['error']).to eq('User not found')
-  #   end
-  # end
+      expect(response).to have_http_status(404)
+      expect(res['error']).to eq('User not found')
+    end
+  end
 end
