@@ -33,6 +33,7 @@ pipeline {
                         "-p 5433:5432 -d", 
                         '-p 5433'
                     )
+                    sh 'cp .docker/application.yml ./config'
                     // $ docker run --restart=always -d --name elasticsearch -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" docker.elastic.co/elasticsearch/elasticsearch:5.5.2
                 }
             }
@@ -41,7 +42,6 @@ pipeline {
         stage ('Run Tests') {
             steps {
                 script {
-                    sh 'cp .docker/application.yml ./config'
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
                         sh 'RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml'
                     }
@@ -55,25 +55,16 @@ pipeline {
             }
         }
 
-
-        // stage ('Cleanup Containers') {
-        //     steps {
-        //         script {
-        //             // sh "docker rm -f $(docker ps -a -q)"
-        //         }
-        //     }
-        // }
-
-        // stage ('Push Image') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
-        //                 dockerapp.push('latest')
-        //                 dockerapp.push("${env.BUILD_ID}")
-        //             }
-        //         }
-        //     }
-        // }
+        stage ('Push Image') {
+            steps {
+                script {
+                    docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
+                        dockerapp.push('latest')
+                        dockerapp.push("${env.BUILD_ID}")
+                    }
+                }
+            }
+        }
 
     }
     post {
@@ -82,6 +73,9 @@ pipeline {
         }
         failure {
             slackSend(color: "danger", failOnError:true, message:"[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build failed  - ${env.BUILD_NUMBER} >")
+        }
+        always {
+            sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
         }
     }
 }
