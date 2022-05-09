@@ -45,7 +45,7 @@ pipeline {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
                         sh 'RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml'
 
-                        archive includes: 'pkg/*.gem'
+                        // archive includes: 'pkg/*.gem'
 
                         publishHTML target: [
                             allowMissing: false,
