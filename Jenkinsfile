@@ -39,7 +39,7 @@ pipeline {
                         ]
                     ]
 
-                    slackSend(channel: "deploy", blocks: blocks)
+                    slackSend(color: "good", blocks: blocks)
 
                     dockerapp = docker.build("matheuscatalan123/cosmos-midgard:base", ".")
                 }
