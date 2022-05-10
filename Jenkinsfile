@@ -12,7 +12,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 script {
-                    def slackResponse = slackSend(color: "good", message: "[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build Started - ${env.BUILD_NUMBER}>")
+                    def slackResponse = slackSend(color: "good", message: "[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build Started - ${env.BUILD_NUMBER}> - ${branch} - ${notificationThumb}")
 
                     blocks = [
                         [
