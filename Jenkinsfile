@@ -13,6 +13,34 @@ pipeline {
             steps {
                 script {
                     def slackResponse = slackSend(color: "good", message: "[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build Started - ${env.BUILD_NUMBER}>")
+
+                    blocks = [
+                        [
+                            "type": "section",
+                            "text": [
+                                "type": "mrkdwn",
+                                "text": "Hello, Assistant to the Regional Manager Dwight! *Michael Scott* wants to know where you'd like to take the Paper Company investors to dinner tonight.\n\n *Please select a restaurant:*"
+                            ]
+                        ],
+                        [
+                            "type": "divider"
+                        ],
+                        [
+                            "type": "section",
+                            "text": [
+                                "type": "mrkdwn",
+                                "text": "*Farmhouse Thai Cuisine*\n:star::star::star::star: 1528 reviews\n They do have some vegan options, like the roti and curry, plus they have a ton of salad stuff and noodles can be ordered without meat!! They have something for everyone here"
+                            ],
+                            "accessory": [
+                                "type": "image",
+                                "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/c7ed05m9lC2EmA3Aruue7A/o.jpg",
+                                "alt_text": "alt text for image"
+                            ]
+                        ]
+                    ]
+
+                    slackSend(channel: "#deploy", blocks: blocks)
+
                     dockerapp = docker.build("matheuscatalan123/cosmos-midgard:base", ".")
                 }
             }
@@ -43,9 +71,7 @@ pipeline {
             steps {
                 script {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
-                        sh 'RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml --format documentation --out tmp/rspec.txt'
-
-                        // archive includes: 'pkg/*.gem'
+                        sh 'RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml --format html --out tmp/rspec.html'
 
                         publishHTML target: [
                             allowMissing: false,

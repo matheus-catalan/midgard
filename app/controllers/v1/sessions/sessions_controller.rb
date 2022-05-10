@@ -2,7 +2,6 @@ module V1
   module Sessions
     class SessionsController < ApplicationController
       def index
-        a = 1+2
         @sessions = Session.all
       end
 

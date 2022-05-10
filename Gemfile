@@ -50,6 +50,7 @@ group :development, :test do
   gem 'rswag-specs'
   gem 'activesupport', '~> 6.1.5'
   gem 'diff-lcs', '~>1.4.4'
+
 end
 
 group :development do
