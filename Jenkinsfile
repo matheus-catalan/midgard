@@ -117,7 +117,8 @@ pipeline {
         always {
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
-            // sh "docker rmi -f registry.hub.docker.com/$REPOSITORY_IMAGE_NAME:${version} $REPOSITORY_IMAGE_NAME:latest"
+            sh 'echo 0 '
+            sh "docker rmi -f registry.hub.docke r.com/$REPOSITORY_IMAGE_NAME:${version} $REPOSITORY_IMAGE_NAME:latest"
 
         }
     }
