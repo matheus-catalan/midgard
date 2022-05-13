@@ -72,7 +72,7 @@ pipeline {
             steps {
                 script {
                     dockerapp.inside("--network=$NAME_NETWORK --name $NAME_CONTAINER_SERVICE_TEST -p 8181:8080 -u root:root") {
-                        sh 'RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml --format html --out tmp/rspec.html'
+                        sh 'RAILS_LOG_TO_STDOUT=false RAILS_ENV=test bundle exec rspec spec --format RspecJunitFormatter --out tmp/rspec.xml --format html --out tmp/rspec.html'
 
                         publishHTML target: [
                             allowMissing: false,
