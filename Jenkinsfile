@@ -99,8 +99,8 @@ pipeline {
                     def version = readFile('.version')
 
                     docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
-                        dockerapp.push('latest')
-                        dockerapp.push(version)
+                        image_latest = dockerapp.push('latest')
+                        image_latest = dockerapp.push(version)
                     }
                 }
             }
@@ -117,8 +117,8 @@ pipeline {
         always {
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
-            sh 'echo 0 '
-            sh "docker rmi -f '$(docker images registry.hub.docker.com/$REPOSITORY_IMAGE_NAME $REPOSITORY_IMAGE_NAME -aq)'" 
+            sh "echo $image_latest"
+            // sh "docker rmi -f '$(docker images registry.hub.docker.com/$REPOSITORY_IMAGE_NAME $REPOSITORY_IMAGE_NAME -aq)'" 
 
         }
     }
