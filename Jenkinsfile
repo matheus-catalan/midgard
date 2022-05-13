@@ -118,7 +118,7 @@ pipeline {
             sh 'echo ${version}'
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
-            sh "docker rmi -f registry.hub.docker.com/$BUILD_IMAGE_LAST_VERSION $REPOSITORY_IMAGE_NAME:latest"
+            // sh "docker rmi -f registry.hub.docker.com/$BUILD_IMAGE_LAST_VERSION $REPOSITORY_IMAGE_NAME:latest"
 
         }
     }
