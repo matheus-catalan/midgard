@@ -51,7 +51,6 @@ pipeline {
             steps {
                 script {
                     sh "docker network ls|grep $NAME_NETWORK > /dev/null || docker network create $NAME_NETWORK"
-                    sh "docker rm -f $NAME_CONTAINER_DB_TEST $NAME_CONTAINER_SERVICE_TEST > /dev/null"
                     docker.image('postgres:13').run(
                         "-it --rm --name $NAME_CONTAINER_DB_TEST " + 
                         "--network=$NAME_NETWORK " + 
