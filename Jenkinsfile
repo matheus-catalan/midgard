@@ -95,17 +95,11 @@ pipeline {
         stage ('Push Image') {
             steps {
                 script {
-                    def version = readFile('.version')
-                    def versions = version.split('\\.')
-                    def major = versions[0]
-                    def minor = versions[0] + '.' + versions[1]
-                    def patch = version.trim()
+                    def version = readFile('.version').split('\\.')[0]
 
                     docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
                         dockerapp.push('latest')
-                        dockerapp.push(major)
-                        dockerapp.push(minor)
-                        dockerapp.push(patch)
+                        dockerapp.push(version)
                     }
                 }
             }
