@@ -8,6 +8,7 @@ pipeline {
         POSTGRES_USER = "test"
         POSTGRES_PASSWORD = "test"
         REPOSITORY_IMAGE_NAME = "matheuscatalan123/cosmos-midgard"
+        BUILD_IMAGE_LAST_VERSION = ""
     }
     stages {
         stage ('Build Image') {
