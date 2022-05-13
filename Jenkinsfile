@@ -95,7 +95,7 @@ pipeline {
         stage ('Push Image') {
             steps {
                 script {
-                    def version = readFile('.version').split('\\.')[0]
+                    def version = readFile('.version')
 
                     docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
                         dockerapp.push('latest')
