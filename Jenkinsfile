@@ -115,9 +115,10 @@ pipeline {
             slackSend(color: "danger", failOnError:true, message:"[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build failed  - ${env.BUILD_NUMBER} >")
         }
         always {
+            def version = readFile('.version')
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
-            sh "docker rmi -f $REPOSITORY_URL:version $REPOSITORY_URL:latest"
+            sh "docker rmi -f registry.hub.docker.com/$REPOSITORY_URL:${version} $REPOSITORY_URL:latest"
 
         }
     }
