@@ -118,9 +118,6 @@ pipeline {
             slackSend(color: "danger", failOnError:true, message:"[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build failed  - ${env.BUILD_NUMBER} >")
         }
         always {
-            script {
-                
-            }
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
             
