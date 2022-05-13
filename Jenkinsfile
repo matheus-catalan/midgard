@@ -9,8 +9,6 @@ pipeline {
         POSTGRES_PASSWORD = "test"
         REPOSITORY_IMAGE_NAME = "matheuscatalan123/cosmos-midgard"
     }
-
-    def version = readFile('.version')
     stages {
         stage ('Build Image') {
             steps {
@@ -98,10 +96,11 @@ pipeline {
         stage ('Push Image') {
             steps {
                 script {
+                    env.BUILD_IMAGE_LAST_VERSION = "${env.REPOSITORY_IMAGE_NAME}:${readFile('.version')}"
 
                     docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
                         dockerapp.push('latest')
-                        dockerapp.push(version)
+                        dockerapp.push($BUILD_IMAGE_LAST_VERSION)
                     }
                 }
             }
@@ -119,7 +118,7 @@ pipeline {
             sh 'echo ${version}'
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
-            sh "docker rmi -f registry.hub.docker.com/$REPOSITORY_IMAGE_NAME:${version} $REPOSITORY_IMAGE_NAME:latest"
+            sh "docker rmi -f registry.hub.docker.com/$REPOSITORY_IMAGE_NAME:${BUILD_IMAGE_LAST_VERSION} $REPOSITORY_IMAGE_NAME:latest"
 
         }
     }
