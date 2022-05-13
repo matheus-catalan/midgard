@@ -101,6 +101,7 @@ pipeline {
                     docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
                         image_latest = dockerapp.push('latest')
                         image_latest = dockerapp.push(version)
+                        sh "echo ${image_latest}"
                     }
                 }
             }
