@@ -7,7 +7,7 @@ pipeline {
         POSTGRES_DB = "test"
         POSTGRES_USER = "test"
         POSTGRES_PASSWORD = "test"
-        REPOSITORY_URL = "matheuscatalan123/cosmos-midgard"
+        REPOSITORY_IMAGE_NAME = "matheuscatalan123/cosmos-midgard"
     }
     stages {
         stage ('Build Image') {
@@ -42,7 +42,7 @@ pipeline {
 
                     slackSend(color: "good", blocks: blocks)
 
-                    dockerapp = docker.build("$REPOSITORY_URL:base", ".")
+                    dockerapp = docker.build("$REPOSITORY_IMAGE_NAME:base", ".")
                 }
             }
         }
@@ -115,10 +115,10 @@ pipeline {
             slackSend(color: "danger", failOnError:true, message:"[${String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())}] - <${env.BUILD_URL}|Build failed  - ${env.BUILD_NUMBER} >")
         }
         always {
-            def version = readFile('.version')
+            sh 'echo ${version}'
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
-            sh "docker rmi -f registry.hub.docker.com/$REPOSITORY_URL:${version} $REPOSITORY_URL:latest"
+            sh "docker rmi -f registry.hub.docker.com/$REPOSITORY_IMAGE_NAME:${version} $REPOSITORY_IMAGE_NAME:latest"
 
         }
     }
