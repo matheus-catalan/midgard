@@ -118,8 +118,8 @@ pipeline {
         always {
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
-            images_id = sh(returnStdout: true, script: 'sudo /usr/bin/docker registry.hub.docker.com/$REPOSITORY_IMAGE_NAME $REPOSITORY_IMAGE_NAME -aq').replaceAll("\n", " ")
-            sh 'docker rmi -f ${images_id}' 
+            images_id = sh(returnStdout: true, script: "/usr/bin/docker images registry.hub.docker.com/$REPOSITORY_IMAGE_NAME -aq")
+            sh "docker rmi -f $images_id"
 
         }
     }
