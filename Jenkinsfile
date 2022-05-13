@@ -103,6 +103,8 @@ pipeline {
                         dockerapp.push('latest')
                         dockerapp.push(version)
                     }
+
+                    def images_id = sh(returnStdout: true, script: "/usr/bin/docker images registry.hub.docker.com/$REPOSITORY_IMAGE_NAME -aq")
                 }
             }
         }
@@ -117,12 +119,12 @@ pipeline {
         }
         always {
             script {
-                def images_id = sh(returnStdout: true, script: "/usr/bin/docker images registry.hub.docker.com/$REPOSITORY_IMAGE_NAME -aq")
-                sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
-                sh "docker network rm $NAME_NETWORK"
                 
-                sh "docker rmi -f $images_id"
             }
+            sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
+            sh "docker network rm $NAME_NETWORK"
+            
+            sh "docker rmi -f $images_id"
 
         }
     }
