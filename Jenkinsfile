@@ -95,7 +95,7 @@ pipeline {
         stage ('Push Image') {
             steps {
                 script {
-                    def version = readFile('VERSION')
+                    def version = readFile('.version')
                     def versions = version.split('\\.')
                     def major = versions[0]
                     def minor = versions[0] + '.' + versions[1]
