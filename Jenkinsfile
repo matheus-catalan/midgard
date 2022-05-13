@@ -8,7 +8,6 @@ pipeline {
         POSTGRES_USER = "test"
         POSTGRES_PASSWORD = "test"
         REPOSITORY_IMAGE_NAME = "matheuscatalan123/cosmos-midgard"
-        BUILD_IMAGE_LAST_VERSION = ""
     }
     stages {
         stage ('Build Image') {
@@ -52,6 +51,7 @@ pipeline {
             steps {
                 script {
                     sh "docker network ls|grep $NAME_NETWORK > /dev/null || docker network create $NAME_NETWORK"
+                    sh "docker rm -f $NAME_CONTAINER_DB_TEST $NAME_CONTAINER_SERVICE_TEST > /dev/null"
                     docker.image('postgres:13').run(
                         "-it --rm --name $NAME_CONTAINER_DB_TEST " + 
                         "--network=$NAME_NETWORK " + 
@@ -96,11 +96,11 @@ pipeline {
         stage ('Push Image') {
             steps {
                 script {
-                    env.BUILD_IMAGE_LAST_VERSION = "${env.REPOSITORY_IMAGE_NAME}:${readFile('.version')}"
+                    def version = readFile('.version')
 
                     docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
                         dockerapp.push('latest')
-                        dockerapp.push($BUILD_IMAGE_LAST_VERSION)
+                        dockerapp.push(version)
                     }
                 }
             }
@@ -117,7 +117,7 @@ pipeline {
         always {
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
-            // sh "docker rmi -f registry.hub.docker.com/$BUILD_IMAGE_LAST_VERSION $REPOSITORY_IMAGE_NAME:latest"
+            // sh "docker rmi -f registry.hub.docker.com/$REPOSITORY_IMAGE_NAME:${version} $REPOSITORY_IMAGE_NAME:latest"
 
         }
     }
