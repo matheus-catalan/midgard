@@ -7,6 +7,7 @@ pipeline {
         POSTGRES_DB = "test"
         POSTGRES_USER = "test"
         POSTGRES_PASSWORD = "test"
+        REPOSITORY_URL = "matheuscatalan123/cosmos-midgard"
     }
     stages {
         stage ('Build Image') {
@@ -41,7 +42,7 @@ pipeline {
 
                     slackSend(color: "good", blocks: blocks)
 
-                    dockerapp = docker.build("matheuscatalan123/cosmos-midgard:base", ".")
+                    dockerapp = docker.build("$REPOSITORY_URL:base", ".")
                 }
             }
         }
@@ -116,7 +117,7 @@ pipeline {
         always {
             sh "docker rm -f ${NAME_CONTAINER_DB_TEST} ${NAME_CONTAINER_SERVICE_TEST}"
             sh "docker network rm $NAME_NETWORK"
-            sh 'docker rmi -f $(docker images -f "dangling=true" -q)'
+            sh "docker rmi -f $REPOSITORY_URL:version $REPOSITORY_URL:latest"
 
         }
     }
